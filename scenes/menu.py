@@ -21,12 +21,15 @@ from entities.pacman import Pacman
 from entities.ghosts.targetGhost import TargetGhost
 from entities.ghosts.wonderingGhost import WonderingGhost
 
+
 class Menu(Activity):
     def __init__(self, game):
         super(Menu, self).__init__(game)
+        self.init_sound = pygame.mixer.Sound("sounds/pacman_beginning.wav")
 
     def on_activate(self):
         self.inflate_buttons()
+        self.init_sound.play()
 
     def on_deactivate(self):
         self.buttons = list()
@@ -48,6 +51,9 @@ class Menu(Activity):
             Button(376, 230, self.on_logo, 'scenes/image/logo.png'))
 
     def to_game(self):
+        # остановка звука меню
+        self.init_sound.stop()
+
         score = 0
         screen = pygame.display.set_mode(screen_dims)
         debuger.debuger = debuger.Debuger()
