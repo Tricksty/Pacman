@@ -1,6 +1,7 @@
 import sys
 import pygame
 from game import Game
+import pathfinding
 
 
 def main():
