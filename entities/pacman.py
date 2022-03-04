@@ -4,6 +4,7 @@ from pygame import Vector2
 from entities.movingObject import movingObject
 from constants import *
 
+
 class Pacman(movingObject):
     def __init__(self, speed, position, ghosts):
         super().__init__(texture=pygame.image.load("images/pacman_circle.png"), speed=speed, position=position)
@@ -20,13 +21,10 @@ class Pacman(movingObject):
         self.hp = 3
 
         # Саунды пакмана. -- Егор
-        self.init_sound = pygame.mixer.Sound("sounds/pacman_beginning.wav")
         self.havalka_sound = pygame.mixer.Sound("sounds/pacman_chomp.wav")
         self.eatfruit_sound = pygame.mixer.Sound("sounds/pacman_eatfruit.wav")
         self.eatghost_sound = pygame.mixer.Sound("sounds/pacman_eatghost.wav")
         self.death_sound = pygame.mixer.Sound("sounds/pacman_death.wav")
-
-        self.init_sound.play()
 
     def update(self, seeds, ghosts, field, events):
         # Движение
@@ -152,7 +150,6 @@ class Pacman(movingObject):
             self.time += self.clock.tick_busy_loop(60)
 
             if self.time > 300:
-                # self.havalka_sound.play()
                 if self.change_sprite > 0:
                     self.texture = pygame.image.load("images/pacman_circle.png")
                     # Обновить маску, так как мы поменяли текстурку
@@ -187,7 +184,10 @@ class Pacman(movingObject):
             self.dead = True
 
     def earn_points(self, seed):
-        self.eatfruit_sound.play()
+        if seed.weight == 100:
+            self.eatfruit_sound.play()
+        else:
+            self.havalka_sound.play()
         self.score = self.score + seed.weight
 
     def draw(self, screen):
