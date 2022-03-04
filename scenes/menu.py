@@ -26,10 +26,10 @@ class Menu(Activity):
     def __init__(self, game):
         super(Menu, self).__init__(game)
         self.init_sound = pygame.mixer.Sound("sounds/pacman_beginning.wav")
+        self.init_sound.play()
 
     def on_activate(self):
         self.inflate_buttons()
-        self.init_sound.play()
 
     def on_deactivate(self):
         self.buttons = list()
